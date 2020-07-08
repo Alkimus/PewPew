@@ -11,9 +11,13 @@ namespace PewPew.Engine.CommandSystem.Commands
         public override void ExecuteFirst(in BaseObject sender)
         {
             if (sender != null) base.ExecuteFirst(sender);
-            if (!Destroy) sender.MotionStruct.Update();
         }
 
+        public override void ExecuteAfter()
+        {
+            Sender.MotionStruct.Update();
+            base.ExecuteAfter();
+        }
     }
 
 }

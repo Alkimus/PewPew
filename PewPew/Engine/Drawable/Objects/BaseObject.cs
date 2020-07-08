@@ -32,13 +32,15 @@ namespace PewPew.Engine.Drawable.Objects
 
         public virtual void Update()
         {
-            SpriteStruct.SpriteSheet.SetIndex(AnimationStruct.Index);
+            SpriteStruct.SetIndex(AnimationStruct.Index);
             for (int i = 0; i < _CommandStruct.CommandQueue.Count; i++)
             {
                 string name = _CommandStruct.CommandQueue.Keys.ElementAt(i);
                 _CommandStruct.RunCommand(name);
             }
         }
+
+
 
     }
 }

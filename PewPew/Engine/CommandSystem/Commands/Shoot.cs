@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
 using PewPew.Engine.Drawable;
+using PewPew.Engine.Drawable.Objects;
 
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,9 @@ namespace PewPew.Engine.CommandSystem.Commands
             _Texture = texture;
         }
 
-        public override void Execute(in GameObject sender)
+        public override void ExecuteFirst(in BaseObject sender)
         {
-            base.Execute(sender);
+            base.ExecuteFirst(sender);
         }
     }
 }

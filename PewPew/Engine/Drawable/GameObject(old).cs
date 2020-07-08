@@ -19,7 +19,7 @@ namespace PewPew.Engine.Drawable
         private MotionStructure _MoveStruct;
         private CommandStructure _CommandStruct;
 
-        
+
         //       *******************************************
 
         public GameObject(string name)

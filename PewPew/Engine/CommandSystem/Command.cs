@@ -13,7 +13,7 @@ namespace PewPew.Engine.CommandSystem
         public Command(string name, bool runOnce)
             => (Name, RunOnce, Destroy, Iteration) = (name, runOnce, false, 0);
         
-        public virtual void Execute(in BaseObject sender)
+        public virtual void ExecuteFirst(in BaseObject sender)
         {
             if (ScheduleDeletion) Destroy = true;
             else Iteration++;

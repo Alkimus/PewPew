@@ -1,4 +1,5 @@
 ﻿using PewPew.Engine.Drawable;
+using PewPew.Engine.Drawable.Objects;
 
 namespace PewPew.Engine.CommandSystem.Commands
 {
@@ -7,10 +8,10 @@ namespace PewPew.Engine.CommandSystem.Commands
         public Rotate(string name, bool runOnce)
             : base(name, runOnce) { }
 
-        public override void Execute(in GameObject sender)
+        public override void ExecuteFirst(in BaseObject sender)
         {
-            if (sender != null) base.Execute(sender);
-            if (!Destroy) sender.Rotation += sender.RotationalVelocity;
+            if (sender != null) base.ExecuteFirst(sender);
+            if (!Destroy) sender.Update();
         }
 
     }

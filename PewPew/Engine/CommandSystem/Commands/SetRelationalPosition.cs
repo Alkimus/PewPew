@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
 using PewPew.Engine.Drawable;
+using PewPew.Engine.Drawable.Objects;
 
 using System;
 
@@ -18,10 +19,10 @@ namespace PewPew.Engine.CommandSystem.Commands
             _Relational = relational;
         }
 
-        public override void Execute(in GameObject sender)
+        public override void ExecuteFirst(in BaseObject sender)
         {
-            if (sender != null) base.Execute(sender);
-            if (!Destroy) sender.Position = Vector2.Add(_Origin, _Relational);
+            if (sender != null) base.ExecuteFirst(sender);
+            if (!Destroy) sender.Update();
         }
     }
 }

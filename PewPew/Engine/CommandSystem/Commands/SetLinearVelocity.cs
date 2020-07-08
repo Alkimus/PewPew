@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
 using PewPew.Engine.Drawable;
+using PewPew.Engine.Drawable.Objects;
 
 using System;
 
@@ -16,7 +17,7 @@ namespace PewPew.Engine.CommandSystem.Commands
             DirectionalForce = directionalForce;
         }
 
-        public override void Execute(in GameObject sender)
+        public override void Execute(in BaseObject sender)
         {
             if (sender != null) base.Execute(sender);
             if (!Destroy) sender.LinearVelocity = DirectionalForce;

@@ -16,7 +16,6 @@ namespace PewPew
     public class GameWindow : Game
     {
         private GraphicsDeviceManager graphics;
-        private GameContent GameContent;
         private Dictionary<string, GameObject> Drawables;
         private SpriteBatch spriteBatch;
 

@@ -5,6 +5,7 @@ namespace PewPew.Engine.CommandSystem
 {
     public interface ICommand
     {
-        public void Execute(in BaseObject sender);
+        public void ExecuteFirst(in BaseObject sender);
+        public void ExecuteAfter(in BaseObject sender);
     }
 }

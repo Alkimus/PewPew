@@ -75,14 +75,12 @@
     <Compile Include="Engine\CommandSystem\Commands\CreateGameObject.cs" />
     <Compile Include="Engine\CommandSystem\Commands\Move.cs" />
     <Compile Include="Engine\CommandSystem\Commands\SetRelationalPosition.cs" />
-    <Compile Include="Engine\CommandSystem\Commands\SetLinearVelocity.cs" />
     <Compile Include="Engine\CommandSystem\Commands\SetPosition.cs" />
     <Compile Include="Engine\CommandSystem\Command.cs" />
     <Compile Include="Engine\CommandSystem\Commands\SetSpriteFrame.cs" />
     <Compile Include="Engine\CommandSystem\Commands\Shoot.cs" />
     <Compile Include="Engine\CommandSystem\ICommand.cs" />
     <Compile Include="Engine\CommandSystem\Invoker.cs" />
-    <Compile Include="Engine\CommandSystem\Commands\SetRotationalVelocity.cs" />
     <Compile Include="Engine\CommandSystem\Commands\Rotate.cs" />
     <Compile Include="Engine\Drawable\Objects\BaseObject.cs" />
     <Compile Include="Engine\Drawable\Objects\PlayerObject.cs" />
@@ -92,7 +90,7 @@
     <Compile Include="Engine\Input\PCkeyboard.cs" />
     <Compile Include="Engine\Input\PCmouse.cs" />
     <Compile Include="Engine\Drawable\Animation.cs" />
-    <Compile Include="Engine\Drawable\GameObject.cs" />
+    <Compile Include="Engine\Drawable\Objects\GameObject.cs" />
     <Compile Include="Engine\Structures\MotionStructure.cs" />
     <Compile Include="Engine\Drawable\SpriteSheet.cs" />
     <Compile Include="Engine\Structures\DrawStructure.cs" />

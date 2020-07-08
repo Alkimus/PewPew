@@ -10,7 +10,10 @@ namespace PewPew.Engine.CommandSystem
         public Invoker(in BaseObject sender) 
             => _Sender = sender;
 
-        public void Invoke(ICommand cmd) 
-            => cmd.Execute(_Sender);
+        public void Invoke(ICommand cmd)
+        { 
+            cmd.ExecuteFirst(_Sender);
+            cmd.ExecuteAfter(_Sender);
+        }
     }
 }

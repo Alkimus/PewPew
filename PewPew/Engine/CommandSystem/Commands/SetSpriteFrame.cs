@@ -1,4 +1,5 @@
 ﻿using PewPew.Engine.Drawable;
+using PewPew.Engine.Drawable.Objects;
 
 namespace PewPew.Engine.CommandSystem.Commands
 {
@@ -11,10 +12,10 @@ namespace PewPew.Engine.CommandSystem.Commands
             FrameIndex = frameIndex;
         }
 
-        public override void Execute(in GameObject sender)
+        public override void ExecuteFirst(in BaseObject sender)
         {
-            if (sender != null) base.Execute(sender);
-            if (!Destroy) sender.Structure.SpriteSheet.SetIndex(FrameIndex);
+            if (sender != null) base.ExecuteFirst(sender);
+            if (!Destroy) sender.SpriteStruct.SetIndex(FrameIndex);
         }
     }
 }

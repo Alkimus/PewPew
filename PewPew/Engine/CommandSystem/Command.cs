@@ -18,6 +18,10 @@ namespace PewPew.Engine.CommandSystem
             if (ScheduleDeletion) Destroy = true;
             else Iteration++;
         }
+        public virtual void ExecuteAfter(in BaseObject sender)
+        {
+
+        }
         
         private bool ScheduleDeletion { get => RunOnce && Iteration != 0; } 
     }

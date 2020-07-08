@@ -7,21 +7,22 @@ namespace PewPew.Engine.Structures
     public struct MotionStructure : System.IEquatable<MotionStructure>
     {
         private const float GravityConst = 6.67e-11f;
-        private Vector2 CurrentPosition;
-        private Vector2 PreviousPosition;
-        private Vector2 Propulsion;
-        private float Thrust;
+
+        private Vector2 CurrentPosition { get; set; }
+        private Vector2 PreviousPosition { get; set; }
+        private Vector2 Propulsion { get; set; }
+        private float PreviousSpeed { get; set; }
+        private float Thrust { get; set; }
+        private DateTime LastUpdate; //CurrentTime after final Update;
+
+        public float Mass { get; private set; } // weight of object - used in calculations
+
         private Vector2 VelocityVector { get => Vector2.Subtract(PreviousPosition, CurrentPosition); } // use current and previous Positions to get, also can use other objects
         private float TravelDistance { get => Vector2.Distance(PreviousPosition, CurrentPosition); }
-
-        private DateTime LastUpdate; //CurrentTime after final Update;
         private TimeSpan ElapsedTime { get => DateTime.Now - LastUpdate; } // LastUpdate - DateTime.Now;
         private float MilisecondsPassed { get => (float)ElapsedTime.TotalMilliseconds; }
         private float CurrentSpeed { get => TravelDistance * MilisecondsPassed; } // Distance over time;
-        private float PerviousSpeed;
-        private Vector2 Acceleration{ get =>  // positive increases speed, negative decreases speed
-
-        public float Mass { get; private set; } // weight of object - used in calculations
+        private float Acceleration { get => CurrentSpeed - PreviousSpeed; } // positive increases speed, negative decreases speed
         
         // Gravity is Gravity const(6.67 X 10^-11) times Mass of object 1 times mass of object 2 divided by distance between objects squared
         // Object 1 mass: 100,  Object2 mass: 10 
@@ -33,7 +34,6 @@ namespace PewPew.Engine.Structures
 
         public MotionStructure(Vector2 currentPosition, float mass) : this()
         {
-            ElapsedMiliseconds = DateTime.Now.Millisecond - LastUpdate.Millisecond;
             CurrentPosition = currentPosition;
             PreviousPosition = currentPosition;
 

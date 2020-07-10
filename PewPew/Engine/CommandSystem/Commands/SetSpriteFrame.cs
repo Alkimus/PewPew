@@ -1,21 +1,20 @@
-﻿using PewPew.Engine.Drawable;
-using PewPew.Engine.Drawable.Objects;
+﻿using PewPew.Engine.Drawable.Objects;
 
 namespace PewPew.Engine.CommandSystem.Commands
 {
-    class SetSpriteFrame : Command
-    {
-        private int FrameIndex;
+	internal class SetSpriteFrame : Command
+	{
+		private int FrameIndex;
 
-        public SetSpriteFrame(string name, bool runOnce, int frameIndex) : base(name, runOnce)
-        {
-            FrameIndex = frameIndex;
-        }
+		public SetSpriteFrame(string name, bool runOnce, int frameIndex) : base(name, runOnce)
+		{
+			FrameIndex = frameIndex;
+		}
 
-        public override void ExecuteFirst(in BaseObject sender)
-        {
-            if (sender != null) base.ExecuteFirst(sender);
-            if (!Destroy) sender.SpriteStruct.SetIndex(FrameIndex);
-        }
-    }
+		public override void ExecuteFirst(in BaseObject sender)
+		{
+			if (sender != null) base.ExecuteFirst(sender);
+			if (!Destroy) sender.SpriteStruct.SetIndex(FrameIndex);
+		}
+	}
 }

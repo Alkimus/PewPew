@@ -2,25 +2,27 @@
 
 namespace PewPew.Engine
 {
-    public static class GameServices
-    {
-        public static GameServiceContainer Instance
-        {
-            get
-            {
-                if (Container is null)
-                {
-                    Container = new GameServiceContainer();
-                }
+	public static class GameServices
+	{
+		public static GameServiceContainer Instance
+		{
+			get
+			{
+				if (Container is null)
+				{
+					Container = new GameServiceContainer();
+				}
 
-                return Container;
-            }
-        }
+				return Container;
+			}
+		}
 
-        public static GameServiceContainer Container { get; private set; }
+		public static GameServiceContainer Container { get; private set; }
 
-        public static T GetService<T>() => (T)Instance.GetService(typeof(T));
-        public static void AddService<T>(T service) => Instance.AddService(typeof(T), service);
-        public static void RemoveService<T>() => Instance.RemoveService(typeof(T));
-    }
+		public static T GetService<T>() => (T)Instance.GetService(typeof(T));
+
+		public static void AddService<T>(T service) => Instance.AddService(typeof(T), service);
+
+		public static void RemoveService<T>() => Instance.RemoveService(typeof(T));
+	}
 }

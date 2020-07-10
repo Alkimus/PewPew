@@ -83,7 +83,6 @@
     <Compile Include="Engine\CommandSystem\Invoker.cs" />
     <Compile Include="Engine\CommandSystem\Commands\Rotate.cs" />
     <Compile Include="Engine\Drawable\Objects\BaseObject.cs" />
-    <Compile Include="Engine\Drawable\Objects\PlayerObject.cs" />
     <Compile Include="Engine\Structures\SpriteSturcture.cs" />
     <Compile Include="Engine\GameContent.cs" />
     <Compile Include="Engine\GameServices.cs" />

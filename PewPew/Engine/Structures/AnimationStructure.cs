@@ -71,7 +71,9 @@ namespace PewPew.Engine.Structures
 
 		public void StopAnimation() => Animate = false;
 
-		public void StartAnimation(string name)
+		public void StartAnimation() => Animate = true;
+
+		public void ActivateAnimation(string name)
 		{
 			AnimationKey = name ?? throw
 				new Exception($"An attempt to change the Animation Key failed " +
@@ -79,8 +81,24 @@ namespace PewPew.Engine.Structures
 			Animate = true;
 		}
 
-		public Animation GetAnimation(int index) => Animations[Animations.Keys.ElementAt(index)];
+		public void SwitchAnimation(string name)
+		{
+			AnimationKey = name ?? throw
+				new Exception($"An attempt to change the Animation Key failed " +
+							  $"because the string name provided was null.");
+		}
 
+		public Animation GetAnimation(int index)
+		{
+			if (!IsInitialized)
+			{
+				throw new Exception($"Animation Structure failed to retrieve the current Animation," +
+									$"because the Structure has not been initialized.");
+			}
+			return Animations[Animations.Keys.ElementAt(index)];
+		}
+
+		public Animation GetAnimation() => Animations[AnimationKey];
 		public Dictionary<string, Animation> GetAllAnimations => Animations;
 
 		#region Overrides

@@ -69,14 +69,14 @@ namespace PewPew
 			GameServices.AddService<SpriteBatch>(spriteBatch);
 			GameServices.AddService<ContentManager>(Content);
 
-			_GameObject = new GameObject();
+
 		}
 
 		private BaseObject AddBullet(string name)
 		{
 			BaseObject bullet = _GameObject.Clone("bullet", "Bullet", Center, 0.1f, 1, 4);
-			bullet.AnimationStruct.AddAnimation(new Animation("BulletAnim", new List<int> { 1, 2, 3, 4 }, 8));
-			bullet.DrawStruct.LayerDepth = 1f;
+			bullet.AnimationAdd(new Animation("BulletAnim", new List<int> { 1, 2, 3, 4 }, 8));
+			bullet.DrawLayer = 1f;
 
 			//BaseObject Generic = new BaseObject(name);
 

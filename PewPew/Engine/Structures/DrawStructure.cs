@@ -18,7 +18,10 @@ namespace PewPew.Engine.Structures
 		public float LayerDepth { get; set; }
 		public Color Tint { get; set; }
 		public SpriteEffects Effects { get; set; }
-		public float ScaleModifer { get; set; }
+		public float ScaleModifer { get; private set; }
+
+
+		public void ModifyScale(float value) => ScaleModifer = value;
 
 		#region Equatable
 

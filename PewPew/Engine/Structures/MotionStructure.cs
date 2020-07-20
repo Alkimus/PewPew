@@ -14,24 +14,33 @@ namespace PewPew.Engine.Structures
 		public Vector2 CurrentPosition { get; private set; }
 		public float Thrust { get; private set; }
 		public float Mass { get; private set; }
+		public float Rotation { get; private set; }
 
 		private Vector2 PreviousPosition { get; set; }
 		private Vector2 Propulsion { get; set; }
 		private float PreviousSpeed { get; set; }
 		private DateTime LastUpdate { get; set; }
 
-		private Vector2 VelocityVector { get => Vector2.Subtract(PreviousPosition, CurrentPosition); } // use current and previous Positions to get, also can use other objects
+		private Vector2 VelocityVector 
+		{ get => Vector2.Subtract(PreviousPosition, CurrentPosition); } 
 		private float TravelDistance { get => Vector2.Distance(PreviousPosition, CurrentPosition); }
 		private TimeSpan ElapsedTime { get => DateTime.Now - LastUpdate; }
 		private float MilisecondsPassed { get => (float)ElapsedTime.TotalMilliseconds; }
 		private float CurrentSpeed { get => TravelDistance * MilisecondsPassed; }
-		private float Acceleration { get => CurrentSpeed - PreviousSpeed; } // positive increases speed, negative decreases speed
+		private float Acceleration { get => CurrentSpeed - PreviousSpeed; }
 
 		//float AngularDisplacement; // = angle of change between previous and current.
 		//float AngularVelocity; // = radians / time;
 		//float AngularAcceleration; // = NetTorque / RotationalInertia;
 		//float NetTorque; // = RotationalInertia * AngularAccelertion;
 		//float RotationalInertia;
+
+		private float _RotationModifer; 
+		private float _LinearModifer;
+
+		public float ModifyMotionRotation { get => _RotationModifer; set => _RotationModifer = value; }
+
+		public float ModifyMotionLinear { get => _LinearModifer; set => _LinearModifer = value; }
 
 		public MotionStructure(Vector2 currentPosition, float mass) : this()
 		{

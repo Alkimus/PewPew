@@ -6,33 +6,47 @@ using System.Linq;
 
 namespace PewPew.Engine.Structures
 {
+	/// <summary>
+	/// This Structure holds all the aspects of the Animation. Mainly a sequencer for cycling frames.
+	/// Index is the main output, should be used as the frames index.
+	/// </summary>
 	public struct AnimationStructure : IEquatable<AnimationStructure>
 	{
 		private Dictionary<string, Animation> Animations;
-		private bool IsInitialized;
-		private int CurrentIndex;
-		private string AnimationKey;
-		private bool Animate;
+		private bool IsInitialized; // bool value indicates the structure is initialized
+		private int CurrentIndex; // This is the output of the animation structure
+		private string AnimationKey; // string index used asthe dictionary key
+		private bool Active; // bool indicating Animation is active
 
 		public int Index
 		{
 			get
 			{
-				CurrentIndex = Animate ? Animations[AnimationKey].FrameIndex : CurrentIndex;
+				CurrentIndex = Active ? Animations[AnimationKey].FrameIndex : CurrentIndex;
 				return CurrentIndex;
 			}
 		}
 
+
+		/// <summary>
+		/// Constructor for the Animations Structure
+		/// </summary>
+		/// <param name="animation">the first Animation for the Dictionary, it gets the key from the animation.</param>
 		public AnimationStructure(Animation animation)
 		{
 			Animations = new Dictionary<string, Animation>();
-			CurrentIndex = 0;
+			CurrentIndex = animation.FrameIndex;
 			AnimationKey = animation.Name;
 			Animations[AnimationKey] = animation;
-			Animate = false;
+			Active = false;
 
 			IsInitialized = true;
 		}
+
+		/// <summary>
+		/// Cnstructor for the Animation Structure with ability to pass a dictionary to it 
+		/// </summary>
+		/// <param name="animations">A dictionary to pass in</param>
 		public AnimationStructure(Dictionary<string, Animation> animations)
 		{
 			Animations = new Dictionary<string, Animation>();
@@ -43,7 +57,7 @@ namespace PewPew.Engine.Structures
 				Animations[AnimationKey] = animations.Values.ElementAt(i);
 			}
 
-			Animate = false;
+			Active = false;
 			AnimationKey = animations.Keys.ElementAt(0);
 			IsInitialized = true;
 		}
@@ -69,16 +83,16 @@ namespace PewPew.Engine.Structures
 			else { Animations.Remove(name); }
 		}
 
-		public void StopAnimation() => Animate = false;
+		public void StopAnimation() => Active = false;
 
-		public void StartAnimation() => Animate = true;
+		public void StartAnimation() => Active = true;
 
 		public void ActivateAnimation(string name)
 		{
 			AnimationKey = name ?? throw
 				new Exception($"An attempt to change the Animation Key failed " +
 							  $"because the string name provided was null.");
-			Animate = true;
+			Active = true;
 		}
 
 		public void SwitchAnimation(string name)
@@ -106,19 +120,19 @@ namespace PewPew.Engine.Structures
 		public override bool Equals(object obj)
 			=> obj is AnimationStructure @object
 			   && AnimationKey == @object.AnimationKey
-			   && Animate == @object.Animate
+			   && Active == @object.Active
 			   && Animations.Equals(@object.Animations);
 
 		public bool Equals(AnimationStructure other)
 			=> AnimationKey == other.AnimationKey
-			   && Animate == other.Animate
+			   && Active == other.Active
 			   && Animations.Equals(other.Animations);
 
 		public override int GetHashCode()
 		{
 			int hashCode = 639375060;
 			hashCode = hashCode * -1529434295 + AnimationKey.GetHashCode();
-			hashCode = hashCode * -1529434295 + Animate.GetHashCode();
+			hashCode = hashCode * -1529434295 + Active.GetHashCode();
 			hashCode = hashCode * -1529434295 + Animations.GetHashCode();
 			return hashCode;
 		}

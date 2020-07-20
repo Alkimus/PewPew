@@ -8,13 +8,33 @@ namespace PewPew.Engine.Drawable.Objects
 {
 	public class BaseObject
 	{
-		public BaseObject(string name, string textureName, int rows, int columns, Vector2 startPosition, float mass, Vector2 scale, float layerDepth, Color tint, SpriteEffects effects, float scaleModifer, Animation animation, object sender)
+
+		private bool RemoveObject;
+		public bool Destroy { get => RemoveObject; set => RemoveObject = value; }
+
+		public BaseObject(SpriteSturcture spriteSturcture, MotionStructure motionStructure, DrawStructure drawStructure, AnimationStructure animationStructure)
+		{
+			_SpriteStruct = spriteSturcture;
+			_SpriteStructInit = true;
+			_MotionStruct = motionStructure;
+			_MotionStructInit = true;
+			_DrawStruct = drawStructure;
+			_DrawStructInit = true;
+			_AnimationStruct = animationStructure;
+			_AnimationStructInit = true;
+			_CommandStruct = new CommandStructure(this);
+			_CommandStructInit = true;
+		}
+
+		public BaseObject(string name, string textureName, int rows, int columns, Vector2 startPosition, float mass, Vector2 scale, float layerDepth, Color tint, SpriteEffects effects, float scaleModifer, Animation animation)
 		{
 			SpriteInit(name, textureName, rows, columns);
 			AnimationInit(animation);
-			CommandInit(sender);
+			CommandInit();
 			MotionInit(startPosition, mass);
 			DrawInit(scale, layerDepth, tint, effects, scaleModifer);
+			RemoveObject = false;
+
 		}
 
 		public virtual void Update()
@@ -26,17 +46,9 @@ namespace PewPew.Engine.Drawable.Objects
 			if (_DrawStructInit) UpdateDraw();
 		}
 
-		public virtual BaseObject Clone(string name, string textureName, Vector2 startPosition, float mass, int rows, int columns)
+		internal virtual void Draw()
 		{
-			var clone = (BaseObject)MemberwiseClone();
-
-			clone.AnimationStruct = _AnimationStructInit ? new AnimationStructure(AnimationStruct.GetAllAnimations) : new AnimationStructure();
-			clone.CommandStruct = _CommandStructInit ? new CommandStructure(clone) : new CommandStructure();
-			clone.MotionStruct = _MotionStructInit ? new MotionStructure(startPosition, mass) : new MotionStructure();
-			clone.SpriteStruct = _SpriteStructInit ? new SpriteSturcture(name, textureName, rows, columns) : new SpriteSturcture();
-			clone.DrawStruct = _DrawStructInit ? new DrawStructure(Vector2.One, 0, Color.White, SpriteEffects.None, 0.0f) : new DrawStructure();
-
-			return clone;
+			GameServices.GetService<SpriteBatch>().Draw(_SpriteStruct.Texture, _MotionStruct.CurrentPosition, _SpriteStruct.SourceRectangle, _DrawStruct.Tint, _MotionStruct.Rotation, _SpriteStruct.Center, _DrawStruct.Scale, _DrawStruct.Effects, _DrawStruct.LayerDepth);
 		}
 
 
@@ -45,7 +57,7 @@ namespace PewPew.Engine.Drawable.Objects
 
 		private SpriteSturcture _SpriteStruct;
 		private bool _SpriteStructInit;
-		
+
 		internal SpriteSturcture SpriteStruct { get => _SpriteStruct; set => _SpriteStruct = value; }
 
 		internal void SpriteInit(string name, string textureName, int rows, int columns)
@@ -54,16 +66,15 @@ namespace PewPew.Engine.Drawable.Objects
 			_SpriteStructInit = true;
 		}
 
-		public string SpriteName => _SpriteStruct.Name;
+		public string SpriteName => _SpriteStruct.GetName;
 
 		public Texture2D SpriteTexture => _SpriteStruct.Texture;
 		public Rectangle SpriteBounds => _SpriteStruct.SourceRectangle;
 		public Vector2 SpriteCenter => _SpriteStruct.Center;
 		public float SpriteBottom => _SpriteStruct.Bottom;
 
-
-		public void SpriteSetIndex(int index) => _SpriteStruct.SetIndex(index);
-
+		public void SetTextureIndex(int index) => _SpriteStruct.SetIndex(index);
+		
 		internal virtual void UpdateSprite()
 		{
 			/// TODO: add logic for Textures
@@ -87,14 +98,19 @@ namespace PewPew.Engine.Drawable.Objects
 			_DrawStructInit = true;
 		}
 
-		public void DrawDepth(float depth) => _DrawStruct.LayerDepth = depth;
-		public void DrawScale(Vector2 scale) => _DrawStruct.Scale = scale;
+		public void DrawDepth(float depth)
+			=> _DrawStruct.LayerDepth = depth;
+		public void DrawScale(Vector2 scale)
+			=> _DrawStruct.Scale = scale;
 
-		public void DrawScaleModifer(float modifer) => _DrawStruct.ScaleModifer = modifer;
+		public void DrawScaleModifer(float modifer)
+			=> _DrawStruct.ModifyScale(modifer);
 
-		public void DrawTint(Color tint) => _DrawStruct.Tint = tint;
+		public void DrawTint(Color tint)
+			=> _DrawStruct.Tint = tint;
 
-		public void DrawEffects(SpriteEffects effects) => _DrawStruct.Effects = effects;
+		public void DrawEffects(SpriteEffects effects)
+			=> _DrawStruct.Effects = effects;
 
 		internal virtual void UpdateDraw()
 		{
@@ -135,9 +151,9 @@ namespace PewPew.Engine.Drawable.Objects
 
 		internal CommandStructure CommandStruct { get => _CommandStruct; set => _CommandStruct = value; }
 
-		internal void CommandInit(object sender)
+		internal void CommandInit()
 		{
-			_CommandStruct = new CommandStructure((BaseObject)sender);
+			_CommandStruct = new CommandStructure(this);
 			_CommandStructInit = true;
 		}
 

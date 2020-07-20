@@ -70,6 +70,7 @@
     <StartupObject>PewPew.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Engine\Logs\Pine.cs" />
     <Compile Include="Engine\Structures\AnimationStructure.cs" />
     <Compile Include="Engine\Structures\CommandStructure.cs" />
     <Compile Include="Engine\CommandSystem\Commands\CreateGameObject.cs" />

@@ -9,6 +9,7 @@ namespace PewPew.Engine.Structures
 {
 	public struct CommandStructure : IEquatable<CommandStructure>
 	{
+	
 		private Invoker CommandInvoker;
 		private Dictionary<string, Command> CommandQueue;
 		private BaseObject Sender;
@@ -61,8 +62,9 @@ namespace PewPew.Engine.Structures
 		{
 			if (!Initialized)
 			{
-				Console.WriteLine($"{this} attempted to run all commands in queue but has not initialized yet.");
-				return;
+				string msg = $"{this} attempted to run all commands in queue but has not initialized yet.";
+				Console.WriteLine(msg);
+				throw new Exception(msg);
 			}
 			for (int i = 0; i < CommandQueue.Count; i++)
 			{
